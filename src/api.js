@@ -31,7 +31,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url =  "https://iity79ygdb.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
+    const url =  " https://iity79ygdb.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
@@ -65,7 +65,7 @@ export const getAccessToken = async () => {
     const code = await searchParams.get("code");
     if (!code) {
       const response = await fetch(
-        "https://iity79ygdb.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
+        " https://iity79ygdb.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
       );
       const result = await response.json();
       const { authUrl } = result;
