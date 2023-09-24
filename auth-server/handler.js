@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
 const { google } = require("googleapis");
 const calendar = google.calendar("v3");
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
-const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
-const redirect_uris = [
-  "https://Christian-Horban.github.io/meet2"
+const SCOPES = [
+  "https://www.googleapis.com/auth/calendar.events.public.readonly",
 ];
+const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
+const redirect_uris = ["https://Christian-Horban.github.io/meet2"];
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -17,7 +17,7 @@ const oAuth2Client = new google.auth.OAuth2(
 module.exports.getAuthURL = async () => {
   /**
    *
-   * Scopes array is passed to the `scope` option. 
+   * Scopes array is passed to the `scope` option.
    *
    */
   const authUrl = oAuth2Client.generateAuthUrl({
@@ -28,8 +28,8 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
     body: JSON.stringify({
       authUrl,
@@ -55,12 +55,12 @@ module.exports.getAccessToken = async (event) => {
     });
   })
     .then((results) => {
-      // Respond with OAuth token 
+      // Respond with OAuth token
       return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
         },
         body: JSON.stringify(results),
       };
@@ -75,7 +75,9 @@ module.exports.getAccessToken = async (event) => {
 };
 module.exports.getCalendarEvents = async (event) => {
   //get access token
-  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+  const access_token = decodeURIComponent(
+    `${event.pathParameters.access_token}`
+  );
   //set credentials
   oAuth2Client.setCredentials({ access_token });
   //get calendar events
@@ -96,22 +98,22 @@ module.exports.getCalendarEvents = async (event) => {
       }
     );
   })
-  .then((results) => {
-    // Respond with OAuth token 
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      body: JSON.stringify({ events: results.data.items }),
-    };
-  })
-  .catch((error) => {
-    // Handle error
-    return {
-      statusCode: 500,
-      body: JSON.stringify(error),
-    };
-  });
-}
+    .then((results) => {
+      // Respond with OAuth token
+      return {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({ events: results.data.items }),
+      };
+    })
+    .catch((error) => {
+      // Handle error
+      return {
+        statusCode: 500,
+        body: JSON.stringify(error),
+      };
+    });
+};
