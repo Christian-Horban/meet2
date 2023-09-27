@@ -10,13 +10,13 @@ provider:
     CLIENT_SECRET: ${file(config.json):CLIENT_SECRET}
     CALENDAR_ID: ${file(config.json):CALENDAR_ID}
 functions:
-getAuthURL:
-  handler: handler.getAuthURL
-  events:
-    - http:
-        path: api/get-auth-url
-        method: get
-        cors: true
+  getAuthURL:
+    handler: handler.getAuthURL
+    events:
+      - http:
+          path: api/get-auth-url
+          method: get
+          cors: true
 
   getAccessToken:
     handler: handler.getAccessToken
