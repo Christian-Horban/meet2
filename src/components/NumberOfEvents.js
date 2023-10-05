@@ -1,9 +1,14 @@
-const NumberOfEvents = () => {
-    return (
-      <div id="number-of-events">
-        <input type="text" defaultValue="32"></input>
-      </div>
-    );
+const NumberOfEvents = ({ setCurrentNOE }) => {
+  const handleInputChanged = (event) => {
+    const value = event.target.value;
+    setCurrentNOE(value);
   };
-  
-  export default NumberOfEvents;
+
+  return (
+    <div id="number-of-events">
+      <input type="text" defaultValue="32" onChange={handleInputChanged} />
+    </div>
+  );
+};
+
+export default NumberOfEvents;
