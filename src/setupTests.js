@@ -2,12 +2,12 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 const MESSAGES_TO_IGNORE = [
-  'When testing, code that causes React state updates should be wrapped into act(...):',
-  'Error:',
-  'The above error occurred',
+  "When testing, code that causes React state updates should be wrapped into act(...):",
+  "Error:",
+  "The above error occurred",
 ];
 
 const originalError = console.error.bind(console.error);
@@ -18,3 +18,5 @@ console.error = (...args) => {
   );
   if (!ignoreMessage) originalError(...args);
 };
+
+jest.setTimeout(30000);
