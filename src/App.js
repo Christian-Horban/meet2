@@ -1,16 +1,18 @@
-import CitySearch from "./components/CitySearch";
-import EventList from "./components/EventList";
-import NumberOfEvents from "./components/NumberOfEvents";
-import CityEventsChart from "./components/CityEventsChart";
 import { useEffect, useState } from "react";
+import EventList from "./components/EventList";
+import CitySearch from "./components/CitySearch";
+import NumberOfEvents from "./components/NumberOfEvents";
 import { extractLocations, getEvents } from "./api";
 import { InfoAlert, ErrorAlert, WarningAlert } from "./components/Alert";
+import CityEventsChart from "./components/CityEventsChart";
+import EventGenresChart from "./components/EventGenresChart";
+
 import "./App.css";
 
-const App = () => {
-  const [allLocations, setAllLocations] = useState([]);
-  const [currentNOE, setCurrentNOE] = useState(32);
+function App() {
   const [events, setEvents] = useState([]);
+  const [currentNOE, setCurrentNOE] = useState(32);
+  const [allLocations, setAllLocations] = useState([]);
   const [currentCity, setCurrentCity] = useState("See all cities");
   const [infoAlert, setInfoAlert] = useState("");
   const [errorAlert, setErrorAlert] = useState("");
@@ -21,25 +23,27 @@ const App = () => {
       setWarningAlert("");
     } else {
       setWarningAlert(
-        "You are currently offline. Some features may not be available."
+        "You're currently offline. Events may not be up-to-date."
       );
     }
     fetchData();
   }, [currentCity, currentNOE]);
 
+  // populate event
   const fetchData = async () => {
     const allEvents = await getEvents();
     const filteredEvents =
       currentCity === "See all cities"
         ? allEvents
         : allEvents.filter((event) => event.location === currentCity);
+
     setEvents(filteredEvents.slice(0, currentNOE));
     setAllLocations(extractLocations(allEvents));
   };
 
   return (
     <div className="App">
-      <h1>Meet App</h1>
+      <h1 className="title">{"{meet}"}</h1>
       <div className="alerts-container">
         {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
         {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
@@ -54,10 +58,13 @@ const App = () => {
         setCurrentNOE={setCurrentNOE}
         setErrorAlert={setErrorAlert}
       />
-      <CityEventsChart allLocations={allLocations} events={events} />
+      <div className="charts-container">
+        <EventGenresChart events={events} />
+        <CityEventsChart allLocations={allLocations} events={events} />
+      </div>
       <EventList events={events} />
     </div>
   );
-};
+}
 
 export default App;
