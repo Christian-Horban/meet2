@@ -1,4 +1,4 @@
-# Meet App: Achievement 4 Project
+# Meet App: 
 
 ![Meet App Screenshot](./public/final.png)
 
